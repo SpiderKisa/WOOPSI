@@ -1,0 +1,20 @@
+<%- include('../partials/header', {title}) %>
+    <section class="author">
+        <!--<div class="author-name">
+            <%# author.firstName %>
+                <%# author.lastName %>
+        </div>
+        <div class="about-post">
+            <%# post.creation_date %>
+        </div>
+        </section> %> -->
+        <section class="post">
+            <h1>
+                <%= post.title %>
+            </h1>
+            <p>
+                <%= post.text %>
+            </p>
+        </section>
+        <a href="/posts">Back</a>
+        <%- include('../partials/footer') %>

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema({
     author_id: {
         type: String,
-        required: true
+        // required: true
     },
     creation_date: {
         type: Date,
@@ -18,7 +18,7 @@ const postSchema = new Schema({
         type: String,
         required: true
     },
-    header: {
+    title: {
         type: String,
         required: true
     }
