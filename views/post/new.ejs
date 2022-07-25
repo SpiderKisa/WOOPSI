@@ -1,4 +1,4 @@
-<%- include('../partials/header', {title}) %>
+<%- layout('/layouts/boilerplate') %>
     <form action="/posts" method="POST">
         <label for="title">Title</label>
         <input type="text" name="title" id="title">
@@ -8,4 +8,3 @@
         <input type="text" name="text" id="text">
         <button>Create</button>
     </form>
-    <%- include('../partials/footer') %>

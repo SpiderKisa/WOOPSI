@@ -1,6 +1,6 @@
-<%- include('../partials/header', {title}) %>
-    <section class="author">
-        <!--<div class="author-name">
+<%- layout('/layouts/boilerplate') %>
+    <!-- <section class="author">
+       <div class="author-name">
             <%# author.firstName %>
                 <%# author.lastName %>
         </div>
@@ -8,13 +8,13 @@
             <%# post.creation_date %>
         </div>
         </section> %> -->
-        <section class="post">
-            <h1>
-                <%= post.title %>
-            </h1>
-            <p>
-                <%= post.text %>
-            </p>
-        </section>
-        <a href="/posts">Back</a>
-        <%- include('../partials/footer') %>
+    <section class="post">
+        <h1>
+            <%= post.title %>
+        </h1>
+        <p>
+            <%= post.text %>
+        </p>
+    </section>
+    <a href="/posts/<%= post._id %>/edit">Edit</a>
+    <a href="/posts">Back</a>

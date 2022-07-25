@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
+
 const Post = require('./models/post');
 const User = require('./models/user');
 
@@ -15,6 +17,7 @@ mongoose.connect('mongodb://localhost:27017/project001')
 
 const app = express();
 
+app.engine('ejs', ejsMate);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -41,7 +44,7 @@ app.get('/posts/:id', async (req, res) => {
 
 app.get('/posts', async (req, res) => {
     const posts = await Post.find({}).limit(30);
-    res.render('post/list', { posts });
+    res.render('post/list', { posts, title: 'All Posts' });
 })
 
 app.get('/posts/:id/edit', async (req, res) => {
@@ -60,6 +63,11 @@ app.delete('/posts/:id', async (req, res) => {
     const { id } = req.params;
     const post = await Post.findByIdAndDelete(id);
     res.redirect('/posts');
+})
+
+
+app.use((req, res) => { //for every path that didn't match previous ones
+    res.status(404).send('NOT FOUND');
 })
 
 let port = 3000;

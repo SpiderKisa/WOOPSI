@@ -1,4 +1,4 @@
-<%- include('../partials/header', {title}) %>
+<%- layout('/layouts/boilerplate') %>
     <form action="/posts/<%= post._id %>/?_method=PUT" method="POST">
         <label for="title">Title</label>
         <input type="text" name="title" id="title" value="<%= post.title %> ">
@@ -10,7 +10,6 @@
         <button>Save</button>
     </form>
     <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-        <button>Delete</button>
+        <button class="btn btn-danger">Delete</button>
     </form>
     <a href="/posts">Back</a>
-    <%- include('../partials/footer') %>
