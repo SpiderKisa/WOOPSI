@@ -1,9 +1,0 @@
-<%- layout('/layouts/boilerplate') %>
-    <ul>
-        <% for (let post of posts) {%>
-            <li><a href="posts/<%= post._id %>">
-                    <%=post.title%>
-                </a>
-            </li>
-            <% } %>
-    </ul>

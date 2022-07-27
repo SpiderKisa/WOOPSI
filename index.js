@@ -5,7 +5,6 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 
 const Post = require('./models/post');
-const User = require('./models/user');
 
 mongoose.connect('mongodb://localhost:27017/project001')
     .then(() => {
@@ -23,6 +22,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use(express.static('assets'));
 
 app.get('/posts/new', async (req, res) => {
     res.render('post/new', { title: 'Create New Post' });
@@ -44,7 +44,7 @@ app.get('/posts/:id', async (req, res) => {
 
 app.get('/posts', async (req, res) => {
     const posts = await Post.find({}).limit(30);
-    res.render('post/list', { posts, title: 'All Posts' });
+    res.render('post/index', { posts, title: 'All Posts' });
 })
 
 app.get('/posts/:id/edit', async (req, res) => {
@@ -67,7 +67,7 @@ app.delete('/posts/:id', async (req, res) => {
 
 
 app.use((req, res) => { //for every path that didn't match previous ones
-    res.status(404).send('NOT FOUND');
+    res.status(404).send('404 NOT FOUND');
 })
 
 let port = 3000;

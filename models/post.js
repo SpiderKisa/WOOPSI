@@ -2,10 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
-    author_id: {
-        type: String,
-        // required: true
-    },
+
     creation_date: {
         type: Date,
         default: new Date(),
@@ -21,7 +18,8 @@ const postSchema = new Schema({
     title: {
         type: String,
         required: true
-    }
+    },
+    image: String
 });
 
 module.exports = mongoose.model('Post', postSchema);

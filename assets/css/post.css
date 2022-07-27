@@ -1,0 +1,9 @@
+.post-link {
+    border: none;
+    text-decoration: none;
+    color: black;
+}
+
+.post-link:hover {
+    color: black;
+}
