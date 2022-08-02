@@ -9,7 +9,9 @@ const ExpressError = require('./utilities/ExpressError');
 const { catchAsync } = require('./utilities/catchAsync');
 
 const Post = require('./models/post');
-const PostSchema = require('./schemas/post');
+const Comment = require('./models/comment');
+
+const { PostSchema, CommentSchema } = require('./schemas');
 
 mongoose.connect('mongodb://localhost:27017/project001')
     .then(() => {
@@ -29,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static('assets'));
 
+//MIGHT NEED TO MAKE ONE FUNCTION FOR VALIDATION AND ADD A PARAMETER 'SCHEMA'
 const validatePost = (req, res, next) => {
     const { error } = PostSchema.validate(req.body);
     if (error) {
@@ -36,6 +39,15 @@ const validatePost = (req, res, next) => {
     }
     next();
 }
+
+const validateComment = (req, res, next) => {
+    const { error } = CommentSchema.validate(req.body);
+    if (error) {
+        throw new ExpressError(error.details.map(e => e.message).join(','), 400);
+    }
+    next();
+}
+
 
 function PostNotFound() {
     throw new ExpressError('Post not found', 404);
@@ -58,7 +70,7 @@ app.post('/posts', validatePost, catchAsync(async (req, res, next) => {
 
 app.get('/posts/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate('comments');
     if (!post) PostNotFound()
     res.render('post/show', { post, title: post.title });
 }))
@@ -82,6 +94,24 @@ app.delete('/posts/:id', catchAsync(async (req, res, next) => {
     const post = await Post.findByIdAndDelete(id);
     if (!post) PostNotFound()
     res.redirect('/posts');
+}))
+
+app.post('/posts/:post_id/comments', validateComment, catchAsync(async (req, res, next) => {
+    const { post_id } = req.params;
+    const post = await Post.findById(post_id);
+    const comment = new Comment(req.body.comment);
+    post.comments.push(comment);
+    await comment.save();
+    await post.save();
+    res.redirect(`/posts/${post_id}`);
+}))
+
+app.delete('/posts/:post_id/comments/:comment_id', catchAsync(async (req, res, next) => {
+    const { post_id, comment_id } = req.params;
+    await Post.findByIdAndUpdate(post_id, { $pull: { comments: comment_id } });
+    await Comment.findByIdAndDelete(comment_id);
+    res.redirect(`/posts/${post_id}`);
+
 }))
 
 app.all('*', (req, res, next) => { //for every path that didn't match previous ones

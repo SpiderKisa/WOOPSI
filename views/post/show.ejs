@@ -2,7 +2,7 @@
     <div class="row mb-3">
         <div class="col-3"></div>
         <div class="col-6">
-            <div class="card">
+            <div class="card mb-3">
                 <img src="<%= post.image%> " class="card-img-top" alt="">
                 <div class="card-body">
                     <h5 class="card-title">
@@ -22,6 +22,32 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <!--COMMENTS AREA -->
+            <form action="/posts/<%= post._id %>/comments" method="POST" class="needs-validation mb-3" novalidate>
+                <div class="mb-3">
+                    <label for="text" class="form-label">Comment</label>
+                    <textarea name="comment[text]" class="form-control" id="text" rows="5" required></textarea>
+                    <div class="invalid-feedback">
+                        Comment can not be blank
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Send</button>
+            </form>
+            <div class="mb-3">
+                <% for (comment of post.comments){%>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <%= comment.text %>
+                            </p>
+                            <form action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE"
+                                method="POST">
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
             </div>
         </div>
         <div class="col-3"></div>
