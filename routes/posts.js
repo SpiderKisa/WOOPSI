@@ -14,8 +14,10 @@ const validatePost = (req, res, next) => {
     next();
 }
 
-function PostNotFound() {
-    throw new ExpressError('Post not found', 404);
+function PostNotFound(req, res) {
+    // throw new ExpressError('Post not found', 404);
+    req.flash('error', 'Post not found');
+    res.redirect('/posts');
 }
 
 router.get('/', catchAsync(async (req, res, next) => {
@@ -30,34 +32,40 @@ router.get('/new', catchAsync(async (req, res, next) => {
 router.post('/', validatePost, catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
     await post.save();
+    req.flash('success', 'Succesfully created a new post!');
     res.redirect(`/posts/${post._id}`);
 }))
 
 router.get('/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id).populate('comments');
-    if (!post) PostNotFound();
+    if (!post) PostNotFound(req, res);
     res.render('post/show', { post, title: post.title });
 }))
 
 router.get('/:id/edit', catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id);
-    if (!post) PostNotFound();
-    res.render('post/edit', { post, title: post.title });
+    if (!post) {
+        PostNotFound(req, res);
+    } else {
+        res.render('post/edit', { post, title: post.title });
+    }
 }))
 
 router.put('/:id', validatePost, catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findByIdAndUpdate(id, req.body.post);
-    if (!post) PostNotFound();
+    if (!post) PostNotFound(req, res);
+    req.flash('success', 'Succesfully edited post!');
     res.redirect(`/posts/${post._id}`);
 }))
 
 router.delete('/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findByIdAndDelete(id);
-    if (!post) PostNotFound();
+    if (!post) PostNotFound(req, res);
+    req.flash('success', 'Succesfully deleted post!');
     res.redirect('/posts');
 }))
 
