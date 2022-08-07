@@ -3,6 +3,7 @@ const router = express.Router({ mergeParams: true });
 
 const ExpressError = require('../utilities/ExpressError');
 const { catchAsync } = require('../utilities/catchAsync');
+const { isLoggedIn } = require('../middleware');
 
 const { CommentSchema } = require('../schemas');
 const Post = require('../models/post');
@@ -16,7 +17,7 @@ const validateComment = (req, res, next) => {
     next();
 }
 
-router.post('/', validateComment, catchAsync(async (req, res, next) => {
+router.post('/', isLoggedIn, validateComment, catchAsync(async (req, res, next) => {
     const { post_id } = req.params;
     const post = await Post.findById(post_id);
     const comment = new Comment(req.body.comment);
@@ -26,7 +27,7 @@ router.post('/', validateComment, catchAsync(async (req, res, next) => {
     res.redirect(`/posts/${post_id}`);
 }))
 
-router.delete('/:comment_id', catchAsync(async (req, res, next) => {
+router.delete('/:comment_id', isLoggedIn, catchAsync(async (req, res, next) => {
     const { post_id, comment_id } = req.params;
     await Post.findByIdAndUpdate(post_id, { $pull: { comments: comment_id } });
     await Comment.findByIdAndDelete(comment_id);

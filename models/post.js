@@ -5,14 +5,10 @@ const Comment = require('./comment');
 
 const postSchema = new Schema({
 
-    // creation_date: {
-    //     type: Date,
-    //     default: new Date(),
-    //     required: true
-    // },
-    // last_modified: {
-    //     type: Date
-    // },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     text: {
         type: String,
         required: true

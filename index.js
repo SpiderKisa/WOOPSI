@@ -5,11 +5,16 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 
 const ExpressError = require('./utilities/ExpressError');
 
-const posts = require('./routes/posts');
-const comments = require('./routes/comments');
+const postRoutes = require('./routes/posts');
+const commentRoutes = require('./routes/comments');
+const userRoutes = require('./routes/users');
+
+const User = require('./models/user');
 
 mongoose.connect('mongodb://localhost:27017/project001')
     .then(() => {
@@ -42,14 +47,23 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    res.locals.user = req.user;
     next();
 })
 
-app.use('/posts', posts);
-app.use('/posts/:post_id/comments', comments);
+app.use('/posts', postRoutes);
+app.use('/posts/:post_id/comments', commentRoutes);
+app.use('/', userRoutes);
 
 
 app.all('*', (req, res, next) => { //for every path that didn't match previous ones
