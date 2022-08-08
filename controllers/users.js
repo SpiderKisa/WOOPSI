@@ -28,7 +28,7 @@ module.exports.renderLoginForm = (req, res, next) => {
 };
 
 module.exports.login = (req, res, next) => {
-    const redirectUrl = req.session.returnTo || '/posts'; //doesn't work. after using middleware session doesn't have returnTo field
+    const redirectUrl = req.session.returnTo || '/posts';
     delete req.session.returnTo;
     res.redirect(redirectUrl);
 };
