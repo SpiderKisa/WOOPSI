@@ -12,6 +12,14 @@
                         <%= post.text.slice(0,150) + '...' %>
                     </p>
                 </div>
+                <div class="card-body d-flex">
+                    <form class="vote-up" data-id="<%= post._id %>">
+                        <button class="btn btn-sm btn-success" type="submit">Vote Up</button>
+                    </form>
+                    <form class="vote-down" data-id="<%= post._id %>">
+                        <button class="btn btn-sm btn-danger" type="submit">Vote Down</button>
+                    </form>
+                </div>
             </a>
         </div>
         <% } %>
