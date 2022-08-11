@@ -53,6 +53,8 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist/')));
+
 
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');

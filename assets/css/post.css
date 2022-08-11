@@ -7,3 +7,26 @@
 .post-link:hover {
     color: black;
 }
+
+.btn-vote {
+    display: inline-block;
+    border: none;
+    /* background-size: 25px 25px; */
+    height: 2.5rem;
+    width: 2.5rem;
+    fill: #595959;
+    /* background-color: white; */
+    /* background-position: center; */
+}
+
+.vote {
+    cursor: pointer;
+}
+
+.on>.btn-upvote {
+    fill: green;
+}
+
+.on>.btn-downvote {
+    fill: red;
+}

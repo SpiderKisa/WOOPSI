@@ -60,3 +60,59 @@ module.exports.delete = catchAsync(async (req, res, next) => {
     req.flash('success', 'Пост успешно удален');
     res.redirect('/posts');
 });
+
+module.exports.upvote = catchAsync(async (req, res, next) => {
+
+    console.log('UPVOTING');
+
+    const { id } = req.params;
+    const post = await Post.findById(id);
+    const user_id = req.user._id;
+
+    const upvoted = post.votes.positive.includes(user_id);
+    const downvoted = post.votes.negative.includes(user_id);
+
+    if (upvoted) {
+        post.votes.positive.splice(post.votes.positive.indexOf(user_id), 1);
+        post.votes.total -= 1;
+    } else {
+
+        if (downvoted) {
+            post.votes.negative.splice(post.votes.negative.indexOf(user_id), 1);
+            post.votes.total += 1;
+        }
+
+        post.votes.positive.push(user_id);
+        post.votes.total += 1;
+    }
+
+    await post.save();
+    res.json({ total: post.votes.total, post_id: id });
+})
+
+module.exports.downvote = catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    const post = await Post.findById(id);
+    const user_id = req.user._id;
+
+    const upvoted = post.votes.positive.includes(user_id);
+    const downvoted = post.votes.negative.includes(user_id);
+
+    if (downvoted) {
+        post.votes.negative.splice(post.votes.negative.indexOf(user_id), 1);
+        post.votes.total += 1;
+    } else {
+
+        if (upvoted) {
+            post.votes.positive.splice(post.votes.positive.indexOf(user_id), 1);
+            post.votes.total -= 1;
+        }
+
+        post.votes.negative.push(user_id);
+        post.votes.total -= 1;
+    }
+
+    await post.save();
+
+    res.json({ total: post.votes.total, post_id: id });
+})

@@ -23,8 +23,29 @@ const postSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Comment'
         }
-    ]
+    ],
+    votes: {
+        positive: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ],
+        negative: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ],
+        total:
+        {
+            type: Number,
+            default: 0
+        }
+    }
+
 });
+
 
 postSchema.post('findOneAndDelete', async (doc) => {
     if (doc) {

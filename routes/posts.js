@@ -16,4 +16,8 @@ router.route('/:id')
     .delete(isLoggedIn, isPostAuthor, posts.delete)
 
 router.get('/:id/edit', isLoggedIn, isPostAuthor, posts.renderEditForm)
+
+router.put('/:id/upvote', isLoggedIn, posts.upvote);
+router.put('/:id/downvote', isLoggedIn, posts.downvote);
+
 module.exports = router;
