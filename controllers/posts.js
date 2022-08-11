@@ -62,9 +62,6 @@ module.exports.delete = catchAsync(async (req, res, next) => {
 });
 
 module.exports.upvote = catchAsync(async (req, res, next) => {
-
-    console.log('UPVOTING');
-
     const { id } = req.params;
     const post = await Post.findById(id);
     const user_id = req.user._id;

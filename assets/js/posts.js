@@ -13,7 +13,6 @@ for (const el of votes) {
             document.querySelector(`#upvote${post_id}`).classList.remove('on');
             url += 'downvote';
         }
-        console.log(url);
         axios({
             method: 'put',
             url: url

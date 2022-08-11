@@ -14,23 +14,21 @@
                 </div>
             </a>
             <div class="card-body">
-                <!-- <form action="/posts/<%# post._id %>/upvote?_method=PUT" method="POST" class="upvote"> -->
-                <span class="vote upvote" data-postid="<%= post._id %>" id="upvote<%= post._id %>">
+                <span class="vote upvote <%= user && post.votes.positive.includes(user._id)? 'on': '' %> "
+                    data-postid="<%= post._id %>" id="upvote<%= post._id %>">
                     <svg class="btn-vote btn-upvote" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
                         <path d="m12 6.586-8.707 8.707 1.414 1.414L12 9.414l7.293 7.293 1.414-1.414L12 6.586z" />
                     </svg>
                 </span>
-                <!-- </form> -->
                 <p class="px-2" id="total_votes<%= post._id %>">
                     <%= post.votes.total %>
                 </p>
-                <!-- <form action="/posts/<%# post._id %>/downvote?_method=PUT" method="POST" class="downvote" "> -->
-                <span class="vote downvote" data-postid="<%= post._id %>" id="downvote<%= post._id %>">
+                <span class="vote downvote <%= user && post.votes.negative.includes(user._id)? 'on': '' %> "
+                    data-postid="<%= post._id %>" id="downvote<%= post._id %>">
                     <svg class=" btn-vote btn-downvote" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
                         <path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z" />
                     </svg>
                 </span>
-                <!-- </form> -->
             </div>
 
         </div>
