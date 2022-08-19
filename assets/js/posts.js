@@ -24,3 +24,4 @@ for (const el of votes) {
         })
     })
 }
+

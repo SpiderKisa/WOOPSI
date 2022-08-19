@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -68,6 +72,17 @@ app.use('/posts/:post_id/comments', commentRoutes);
 app.use('/', userRoutes);
 
 
+app.get('/create', (req, res, next) => {
+    // console.log("GGGGGEEEET")
+    res.render('post/create', { title: 'create' });
+})
+
+app.post('/create', (req, res, next) => {
+    res.send(req.body);
+})
+
+
+
 app.all('*', (req, res, next) => { //for every path that didn't match previous ones
     next(new ExpressError('Page Not Found', 404));
 })
@@ -75,6 +90,7 @@ app.all('*', (req, res, next) => { //for every path that didn't match previous o
 app.use((err, req, res, next) => {
     res.render('error', { err, title: `Ошибка ${err.statusCode}` });
 })
+
 
 let port = 3000;
 app.listen(port, () => console.log(`LISTENING ON PORT ${port}`));

@@ -17,7 +17,10 @@ const postSchema = new Schema({
         type: String,
         required: true
     },
-    image: String,
+    images: [{
+        url: String,
+        filename: String
+    }],
     comments: [
         {
             type: Schema.Types.ObjectId,

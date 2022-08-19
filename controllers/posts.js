@@ -16,8 +16,13 @@ module.exports.renderNewForm = (req, res, next) => {
     res.render('post/new', { title: 'Создать новый пост' });
 };
 
+const getImagesFromRequest = (req) => {
+    return req.files.map(f => ({ url: f.path, filename: f.filename }));
+}
+
 module.exports.createNewPost = catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
+    post.images = getImagesFromRequest(req);
     post.author = req.user._id;
     await post.save();
     res.redirect(`/posts/${post._id}`);
@@ -49,6 +54,10 @@ module.exports.edit = catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findByIdAndUpdate(id, req.body.post);
     if (!post) PostNotFound(req, res);
+    console.log(post.images);
+    post.images = getImagesFromRequest(req);
+    console.log(post.images);
+    await post.save();
     req.flash('success', 'Пост успешно редактирован');
     res.redirect(`/posts/${post._id}`);
 });

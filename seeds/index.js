@@ -12,11 +12,20 @@ const seedDB = async () => {
     for (let i = 0; i < 20; i++) {
         const post = new Post({
             author: '62ef5ffb47dacbf6a3d00af9',
-            image: 'https://source.unsplash.com/collection/298137/1600x900',
             title: 'Lorem ipsum dolor sit amet',
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 + "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 + "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/dipba530d/image/upload/v1660275487/PROJECT001/fpfye7oese7lre5crtf4.jpg',
+                    filename: 'PROJECT001/fpfye7oese7lre5crtf4'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dipba530d/image/upload/v1660275487/PROJECT001/fpfye7oese7lre5crtf4.jpg',
+                    filename: 'PROJECT001/fpfye7oese7lre5crtf4'
+                }
+            ]
 
 
         });

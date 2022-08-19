@@ -4,7 +4,7 @@ const PostSchema = Joi.object({
     post: Joi.object({
         title: Joi.string().required(),
         text: Joi.string().required(),
-        image: Joi.string().allow('')
+        // image: Joi.string().allow('')
     }).required()
 })
 
