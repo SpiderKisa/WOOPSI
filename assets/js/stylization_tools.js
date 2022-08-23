@@ -1,3 +1,4 @@
+const placeholder = 'Начните печатать или выберете элемент';
 const menu = document.querySelector('#add-item-menu');
 
 const form = document.querySelector('#form-new-post');
@@ -10,31 +11,33 @@ function convertRemToPixels(rem) {
 }
 
 const focusOnEmptyElement = (e) => {
-    // console.dir(e);
     const input = e.currentTarget;
     const rect = input.getBoundingClientRect();
     menu.style.position = 'absolute';
-    menu.style.top = 100;
-    menu.style.left = 100;
-    // menu.style.top = rect.y;
-    // menu.style.left = rect.x - convertRemToPixels(1);
-    console.dir(menu);
+    menu.style.top = `${rect.y}px`;
+    menu.style.left = `${rect.x - convertRemToPixels(3.25)}px`;
+}
+
+const textInputKeyUp = (e) => {
+    const input = e.currentTarget;
+    if (input.value !== '') {
+        menu.classList.add('d-none');
+    } else {
+        menu.classList.remove('d-none');
+    }
 }
 
 form.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
         const activeElement = document.activeElement;
-        if (activeElement.classList.contains('title')) {
-            const emptyElement = document.createElement('input');
-            emptyElement.classList.add('form-control', 'empty-post-element', 'mb-3');
-            emptyElement.placeholder = 'Начните печатать или выберете элемент';
-            emptyElement.name = 'post[text]';
-            activeElement.insertAdjacentElement("afterend", emptyElement);
-            emptyElement.addEventListener('focus', focusOnEmptyElement);
-            emptyElement.focus();
-            // console.dir(emptyElement);
-
-        }
+        const emptyElement = document.createElement('input');
+        emptyElement.classList.add('form-control', 'empty-post-element', 'mb-3');
+        emptyElement.placeholder = placeholder;
+        emptyElement.name = 'post[text]';
+        activeElement.insertAdjacentElement("afterend", emptyElement);
+        emptyElement.addEventListener('focus', focusOnEmptyElement);
+        emptyElement.addEventListener('keyup', textInputKeyUp);
+        emptyElement.focus();
     }
 })
 
