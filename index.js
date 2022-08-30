@@ -73,11 +73,11 @@ app.use('/', userRoutes);
 
 
 app.get('/create', (req, res, next) => {
-    // console.log("GGGGGEEEET")
     res.render('post/create', { title: 'create' });
 })
 
 app.post('/create', (req, res, next) => {
+    // console.dir(req.body);
     res.send(req.body);
 })
 

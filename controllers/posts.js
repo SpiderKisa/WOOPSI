@@ -122,3 +122,8 @@ module.exports.downvote = catchAsync(async (req, res, next) => {
 
     res.json({ total: post.votes.total, post_id: id });
 })
+
+module.exports.upload = catchAsync(async (req, res, next) => {
+    const file = req.files[0];
+    res.json({ url: file.path, filename: file.filename });
+})

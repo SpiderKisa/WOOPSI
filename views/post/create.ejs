@@ -2,22 +2,23 @@
 
     <h1>Новый пост</h1>
 
-    <form action="/create" method="post" id="form-new-post">
+    <form action="/create" method="POST" id="form-new-post">
 
         <input type="text" name="post[title]" class="form-control mb-3 title" id="title" placeholder="Заголовок"
             autofocus>
 
-        <button class="btn btn-info" type="submit">Опубликовать</button>
+        <button class="btn btn-info" id="btn-submit" type="button">Опубликовать</button>
 
     </form>
 
-    <div class="dropend" id="add-item-menu">
+    <div class="dropend d-none" id="add-item-menu">
         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" role="button">
             <img src="/images/add-element.svg" alt="добавить элемент" class="img-fluid">
         </button>
         <div class="dropdown-menu">
-            <label class="dropdown-item">
-                Изображение <input type="file" hidden id="image-upload" accept=".png, .jpg, .jpeg">
+            <label class="dropdown-item" for="image-upload">
+                Изображение <input type="file" class="d-none" id="image-upload" accept=".png, .jpg, .jpeg"
+                    name="image-upload">
             </label>
         </div>
     </div>

@@ -24,4 +24,6 @@ router.get('/:id/edit', isLoggedIn, isPostAuthor, posts.renderEditForm)
 router.put('/:id/upvote', isLoggedIn, posts.upvote);
 router.put('/:id/downvote', isLoggedIn, posts.downvote);
 
+router.post('/upload', /*isLoggedIn,*/ upload.any(), posts.upload);
+
 module.exports = router;
