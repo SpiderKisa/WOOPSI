@@ -1,29 +1,41 @@
 <%- layout('/layouts/boilerplate') %>
+    <link rel="stylesheet" href="/css/post/creating.css">
 
-    <form action="/posts/<%= post._id %>/?_method=PUT" method="POST" class="needs-validation" novalidate
-        enctype="multipart/form-data">
+    <form action="/posts/<%= post._id %>/?_method=PUT" method="POST" id="form-new-post" class="d-flex flex-column" novalidate>
+        <input type="hidden" name="post[userId]" value="<%= user._id %>" id="userId">
         <div class="mb-3">
-            <label for="title" class="form-label">Заголовок</label>
-            <input type="text" name="post[title]" class="form-control" id="title" value="<%= post.title %>" required>
+            <input type="text" name="post[title]" class="form-control title shadow-none" id="title"
+                placeholder="Заголовок" autofocus required value="<%= post.title %> ">
             <div class="invalid-feedback">
                 Заголовок не может быть пустым
             </div>
         </div>
-        <div class="mb-3">
-            <!-- <label for="image" class="form-label">URL изображения</label>
-            <input type="text" name="post[image]" class="form-control" id="image" > -->
-            <input type="file" name="post[image]" class="form-control mb-3" id="image-upload"
-                accept=".png, .jpg, .jpeg">
-            <img id="img-preview" src="<%= post.images.length ? post.images[0].url : '' %> " class="img-fluid" alt="" />
+        <% for (let part of post.parts){%>
+            <% if (part.partType==='text' ) { %>
+                <textarea name="post[inputs]" class="form-control empty-post-element mb-1 textarea-post shadow-none"><%= part.text %></textarea>
+            <% } else if(part.partType==='image' ) {%>
+                <input type="hidden" name="post[inputs]" value="image<%= user._id %><><%= part.src %><><%= part.filename %>">
+                <div class="text-center">
+                    <img src="<%=part.src%>" class="img-fluid mb-1">
+                </div>
+            <% } %>
+        <%}%>
+        <div class="sticky-bottom mt-auto py-3" id="create-menu">
+            <button class="btn btn-info" id="btn-submit" type="button">Опубликовать</button>
         </div>
-        <div class="mb-3">
-            <label for="text" class="form-label">Текст</label>
-            <textarea name="post[text]" class="form-control" id="text" rows="10" required><%= post.text %></textarea>
-            <div class="invalid-feedback">
-                Текст не может быть пустым
-            </div>
-        </div>
-        <button type="submit" class="btn btn-success">Сохранить</button>
+
     </form>
 
-    <script src="/js/stylization_tools.js"></script>
+    <div class="dropend d-none" id="add-item-menu">
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+            <img src="/images/add-element.svg" alt="добавить элемент" class="img-fluid">
+        </button>
+        <div class="dropdown-menu">
+            <label class="dropdown-item" for="image-upload">
+                Изображение <input type="file" class="d-none" id="image-upload" accept=".png, .jpg, .jpeg"
+                    name="image-upload">
+            </label>
+        </div>
+    </div>
+
+    <script src="/js/post/creating.js"></script>

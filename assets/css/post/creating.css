@@ -1,0 +1,25 @@
+body,
+#create-menu {
+    background-color: white;
+}
+
+form {
+    min-height: 90vh;
+}
+
+.form-control {
+    border: none;
+    font-size: 1.25rem;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border: none;
+}
+
+.title::placeholder,
+.title {
+    font-weight: 600;
+    font-size: 2rem;
+}

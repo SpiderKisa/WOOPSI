@@ -9,18 +9,23 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    text: {
-        type: String,
-        required: true
-    },
+    parts: [
+        {
+            partType: {
+                type: String,
+                required: true,
+                enum: ['image', 'text']
+            },
+            src: String,
+            filename: String,
+            text: String,
+            _id: false,
+        }
+    ],
     title: {
         type: String,
         required: true
     },
-    images: [{
-        url: String,
-        filename: String
-    }],
     comments: [
         {
             type: Schema.Types.ObjectId,

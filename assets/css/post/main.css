@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .post-link {
     border: none;
     text-decoration: none;
@@ -28,14 +32,15 @@
     fill: red;
 }
 
-/* .caret-off::before {
-    display: none !important;
+.textarea-post::-webkit-scrollbar {
+    display: none;
 }
 
-.caret-off::after {
-    display: none !important;
-} */
+.textarea-post {
+    overflow: hidden;
+    resize: none;
+}
 
-/* .dropdown-item {
-    cursor: pointer;
-} */
+#add-item-menu {
+    position: absolute;
+}

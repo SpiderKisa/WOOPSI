@@ -71,18 +71,6 @@ app.use('/posts', postRoutes);
 app.use('/posts/:post_id/comments', commentRoutes);
 app.use('/', userRoutes);
 
-
-app.get('/create', (req, res, next) => {
-    res.render('post/create', { title: 'create' });
-})
-
-app.post('/create', (req, res, next) => {
-    // console.dir(req.body);
-    res.send(req.body);
-})
-
-
-
 app.all('*', (req, res, next) => { //for every path that didn't match previous ones
     next(new ExpressError('Page Not Found', 404));
 })
