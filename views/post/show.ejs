@@ -1,7 +1,7 @@
 <%- layout('/layouts/boilerplate') %>
 
     <div class="card mb-3">
-        <img src="<%= post.image%> " class="card-img-top" alt="">
+
         <div class="card-body">
             <h5 class="card-title">
                 <%= post.title %>
@@ -9,9 +9,15 @@
             <h6 class="card-subtitle mb-2 text-muted">
                 <%= post.author.username %>
             </h6>
-            <p class="card-text">
-                <%= post.text %>
-            </p>
+            <% for (let part of post.parts){%>
+                <% if (part.partType==='text') { %>
+                    <p class="card-text"><%= part.text %></p>
+                <% } else if(part.partType==='image') {%>
+                    <div class="text-center">
+                        <img src="<%=part.src%>" class="img-fluid mb-1">
+                    </div>
+                <% } %>
+            <%}%>
             <% if (user && post.author.equals(user._id)){ %>
                 <div class="row row-cols-lg-auto g-3 align-items-center">
                     <div class="col-12">
@@ -23,7 +29,7 @@
                         </form>
                     </div>
                 </div>
-                <% } %>
+            <% } %>
         </div>
     </div>
     <!--COMMENTS AREA -->
@@ -51,7 +57,7 @@
                         <form action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-sm btn-danger">Удалить</button>
                         </form>
-                        <% } %>
+                    <% } %>
                 </div>
             </div>
             <% } %>

@@ -25,8 +25,8 @@ const Joi = BaseJoi.extend(extension);
 const PostSchema = Joi.object({
     post: Joi.object({
         title: Joi.string().required().escapeHTML(),
-        text: Joi.string().required().escapeHTML(),
-        // image: Joi.string().allow('')
+        userId: Joi.string().required(),
+        inputs: Joi.array(),
     }).required()
 })
 
@@ -39,3 +39,4 @@ const CommentSchema = Joi.object({
 })
 
 module.exports.CommentSchema = CommentSchema;
+

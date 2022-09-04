@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .post-link {
     border: none;
     text-decoration: none;
@@ -26,4 +30,17 @@
 
 .on>.btn-downvote {
     fill: red;
+}
+
+.textarea-post::-webkit-scrollbar {
+    display: none;
+}
+
+.textarea-post {
+    overflow: hidden;
+    resize: none;
+}
+
+#add-item-menu {
+    position: absolute;
 }
