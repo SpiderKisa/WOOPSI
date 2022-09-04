@@ -57,6 +57,7 @@ app.use(flash());
 
 app.use(helmet());
 
+app.use(helmet.crossOriginEmbedderPolicy({ policy: "credentialless" }));
 
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com/",
@@ -87,7 +88,7 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
-                "https://res.cloudinary.com/dipba530d/",
+                `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`,
                 "https://images.unsplash.com/",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
